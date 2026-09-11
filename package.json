@@ -1,0 +1,53 @@
+{
+  "name": "hexo-workbench",
+  "displayName": "Hexo Workbench",
+  "description": "A focused VS Code authoring environment for Hexo blogs.",
+  "version": "0.1.0",
+  "publisher": "LumiDesk",
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LumiDesk/hexo-workbench.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LumiDesk/hexo-workbench/issues"
+  },
+  "homepage": "https://github.com/LumiDesk/hexo-workbench#readme",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:hexoWorkbench.helloWorld"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "hexoWorkbench.helloWorld",
+        "title": "Hexo Workbench: Hello World"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint .",
+    "package": "pnpm run check-types && pnpm run lint && pnpm run build && vsce package",
+    "prepublishOnly": "pnpm run check-types && pnpm run lint && pnpm run build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.13.10",
+    "@types/vscode": "^1.100.0",
+    "@vscode/vsce": "^3.3.2",
+    "esbuild": "^0.25.0",
+    "eslint": "^10.10.0",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0"
+  },
+  "packageManager": "pnpm@11.17.0"
+}

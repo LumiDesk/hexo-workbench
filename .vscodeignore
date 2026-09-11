@@ -1,0 +1,16 @@
+.vscode/
+.github/
+.gitignore
+.editorconfig
+pnpm-workspace.yaml
+src/
+*.mjs
+*.ts
+tsconfig.json
+eslint.config.mjs
+pnpm-lock.yaml
+node_modules/
+dist/**/*.map
+test/
+coverage/
+*.vsix
