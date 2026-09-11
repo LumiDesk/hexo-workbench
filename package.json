@@ -82,7 +82,8 @@
         ],
         "editor.dropIntoEditor.preferences": [
           "markdown.link.image.hexo"
-        ]
+        ],
+        "editor.pasteAs.showPasteSelector": "never"
       }
     }
   },
