@@ -16,7 +16,7 @@ docs/
 
 - [产品简报](product/brief.md)
 - [核心用户流程](product/flows.md)
-- [待确认问题](product/open-questions.md)
+- [产品评审结论](product/open-questions.md)
 - [扩展边界草案](architecture/extension-boundary.md)
 - [ADR 0001：本地优先与主题无关](decisions/0001-local-first.md)
 
