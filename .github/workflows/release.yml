@@ -1,0 +1,62 @@
+name: Build GitHub Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.17.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Package VSIX
+        run: pnpm run package
+
+      - name: Prepare release notes
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          VSIX="hexo-workbench-${VERSION}.vsix"
+          REPO="https://github.com/${GITHUB_REPOSITORY}"
+          {
+            echo "# Hexo Workbench v${VERSION}"
+            echo
+            echo "## 安装"
+            echo
+            echo "下载下方 Assets 中的 \`${VSIX}\`，然后在 VS Code 中执行："
+            echo
+            echo '```bash'
+            echo "code --install-extension ${VSIX}"
+            echo '```'
+            echo
+            echo "完整变更记录：[CHANGELOG.md](${REPO}/blob/main/CHANGELOG.md)"
+          } > release-notes.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: false
+          files: '*.vsix'
+          body_path: release-notes.md

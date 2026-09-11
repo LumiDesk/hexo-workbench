@@ -4,6 +4,7 @@
   "description": "A focused VS Code authoring environment for Hexo blogs.",
   "version": "0.1.0",
   "publisher": "LumiDesk",
+  "icon": "resources/icon.png",
   "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
@@ -14,13 +15,19 @@
   },
   "homepage": "https://github.com/LumiDesk/hexo-workbench#readme",
   "engines": {
+    "node": ">=20.19.0",
     "vscode": "^1.100.0"
   },
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onCommand:hexoWorkbench.helloWorld"
+    "onCommand:hexoWorkbench.helloWorld",
+    "onCommand:hexoWorkbench.initializeWorkspace",
+    "onCommand:hexoWorkbench.newPost",
+    "onCommand:hexoWorkbench.newDraft",
+    "onCommand:hexoWorkbench.pasteImage",
+    "onLanguage:markdown"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -28,16 +35,71 @@
       {
         "command": "hexoWorkbench.helloWorld",
         "title": "Hexo Workbench: Hello World"
+      },
+      {
+        "command": "hexoWorkbench.initializeWorkspace",
+        "title": "Hexo Workbench: Initialize Workspace"
+      },
+      {
+        "command": "hexoWorkbench.newPost",
+        "title": "Hexo Workbench: New Post"
+      },
+      {
+        "command": "hexoWorkbench.newDraft",
+        "title": "Hexo Workbench: New Draft"
+      },
+      {
+        "command": "hexoWorkbench.pasteImage",
+        "title": "Hexo Workbench: Paste Image"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Hexo Workbench",
+      "properties": {
+        "hexoWorkbench.defaultImageLinkFormat": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "asset_img"
+          ],
+          "enumDescriptions": [
+            "Insert a standard Markdown image reference.",
+            "Insert Hexo's asset_img tag plugin reference."
+          ],
+          "default": "markdown",
+          "description": "Default image reference format for Hexo Workbench."
+        },
+        "hexoWorkbench.imageNameFormat": {
+          "type": "string",
+          "default": "YYYYMMDD-HHmmss",
+          "description": "Global filename format for pasted images. Tokens: YYYY, MM, DD, HH (or hh), mm, ss, SSS."
+        }
+      }
+    },
+    "configurationDefaults": {
+      "[markdown]": {
+        "editor.pasteAs.preferences": [
+          "markdown.link.image.hexo"
+        ],
+        "editor.dropIntoEditor.preferences": [
+          "markdown.link.image.hexo"
+        ],
+        "editor.pasteAs.showPasteSelector": "never"
+      }
+    }
   },
   "scripts": {
     "build": "node esbuild.mjs",
     "watch": "node esbuild.mjs --watch",
     "check-types": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "lint": "eslint .",
-    "package": "pnpm run check-types && pnpm run lint && pnpm run build && vsce package",
-    "prepublishOnly": "pnpm run check-types && pnpm run lint && pnpm run build"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "package": "pnpm run format:check && pnpm run check-types && pnpm run lint && pnpm run test && pnpm run build && vsce package --no-dependencies",
+    "prepublishOnly": "pnpm run format:check && pnpm run check-types && pnpm run lint && pnpm run test && pnpm run build",
+    "release": "node scripts/release.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -46,8 +108,13 @@
     "@vscode/vsce": "^3.3.2",
     "esbuild": "^0.25.0",
     "eslint": "^10.10.0",
+    "prettier": "^3.9.6",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.0"
+    "typescript-eslint": "^8.26.0",
+    "vitest": "^5.0.0"
   },
-  "packageManager": "pnpm@11.17.0"
+  "packageManager": "pnpm@11.17.0",
+  "dependencies": {
+    "yaml": "^2.9.0"
+  }
 }
