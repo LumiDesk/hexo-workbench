@@ -2,7 +2,7 @@
   "name": "hexo-workbench",
   "displayName": "Hexo Workbench",
   "description": "A focused VS Code authoring environment for Hexo blogs.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "LumiDesk",
   "icon": "resources/icon.png",
   "license": "GPL-3.0-only",
