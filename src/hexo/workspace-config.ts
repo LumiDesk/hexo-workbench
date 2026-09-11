@@ -20,7 +20,8 @@ const DEFAULT_FRONT_MATTER: FrontMatterConfig = {
 
 export const DEFAULT_WORKSPACE_CONFIG: WorkspaceConfig = {
   image: {
-    linkFormat: 'markdown'
+    linkFormat: 'markdown',
+    nameFormat: undefined
   },
   frontMatter: DEFAULT_FRONT_MATTER
 }
@@ -50,7 +51,8 @@ export function parseWorkspaceConfig(text: string): WorkspaceConfig {
 
   return {
     image: {
-      linkFormat: linkFormat(image.linkFormat)
+      linkFormat: linkFormat(image.linkFormat),
+      nameFormat: typeof image.nameFormat === 'string' && image.nameFormat.trim() ? image.nameFormat : undefined
     },
     frontMatter: {
       common: { ...DEFAULT_FRONT_MATTER.common, ...record(frontMatter.common) },
@@ -63,7 +65,8 @@ export function parseWorkspaceConfig(text: string): WorkspaceConfig {
 export function serializeDefaultWorkspaceConfig(): string {
   return YAML.stringify({
     image: {
-      linkFormat: DEFAULT_WORKSPACE_CONFIG.image.linkFormat
+      linkFormat: DEFAULT_WORKSPACE_CONFIG.image.linkFormat,
+      nameFormat: null
     },
     frontMatter: DEFAULT_WORKSPACE_CONFIG.frontMatter
   })

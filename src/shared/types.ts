@@ -10,6 +10,7 @@ export interface FrontMatterConfig {
 export interface WorkspaceConfig {
   image: {
     linkFormat: ImageLinkFormat
+    nameFormat?: string
   }
   frontMatter: FrontMatterConfig
 }

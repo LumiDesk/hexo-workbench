@@ -67,16 +67,21 @@
           ],
           "default": "markdown",
           "description": "Default image reference format for Hexo Workbench."
+        },
+        "hexoWorkbench.imageNameFormat": {
+          "type": "string",
+          "default": "YYYYMMDD-HHmmss",
+          "description": "Global filename format for pasted images. Tokens: YYYY, MM, DD, HH (or hh), mm, ss, SSS."
         }
       }
     },
     "configurationDefaults": {
       "[markdown]": {
         "editor.pasteAs.preferences": [
-          "text.markdown.link.image.hexo"
+          "markdown.link.image.hexo"
         ],
         "editor.dropIntoEditor.preferences": [
-          "text.markdown.link.image.hexo"
+          "markdown.link.image.hexo"
         ]
       }
     }

@@ -3,10 +3,10 @@ import { basename, extname, join } from 'node:path'
 import { contentAssetPath, projectForDocument } from '../hexo/project'
 import { supportsHexoMarkdownAssets } from '../hexo/site-config'
 import { createImageReference, relativeReference } from './references'
-import { imageExtension, uniqueImageName } from './naming'
+import { formatImageName, imageExtension, uniqueImageName } from './naming'
 import type { HexoProject, ImageLinkFormat } from '../shared/types'
 
-const BASE_KIND = vscode.DocumentDropOrPasteEditKind.Text.append('markdown', 'link', 'image', 'hexo')
+const BASE_KIND = vscode.DocumentDropOrPasteEditKind.Empty.append('markdown', 'link', 'image', 'hexo')
 export const MARKDOWN_KIND = BASE_KIND.append('markdown')
 export const ASSET_IMG_KIND = BASE_KIND.append('asset-img')
 
@@ -90,6 +90,11 @@ function configuredFormat(project: HexoProject): ImageLinkFormat {
   return setting === 'asset_img' ? 'asset_img' : 'markdown'
 }
 
+function configuredNameFormat(project: HexoProject): string {
+  if (project.workspaceConfig.image.nameFormat) return project.workspaceConfig.image.nameFormat
+  return vscode.workspace.getConfiguration('hexoWorkbench').get('imageNameFormat', 'YYYYMMDD-HHmmss')
+}
+
 function requestedFormat(context: vscode.DocumentPasteEditContext): ImageLinkFormat | undefined {
   if (!context.only) return undefined
   if (context.only.value.endsWith('.asset-img')) return 'asset_img'
@@ -160,19 +165,14 @@ class HexoImagePasteProvider implements vscode.DocumentPasteEditProvider, vscode
     const assetDirectory = contentAssetPath(project, document.uri.fsPath)
     await ensureDirectory(vscode.Uri.file(assetDirectory))
     const usedNames = new Set<string>()
-    let imageName = uniqueImageName(
-      basename(document.uri.fsPath, extname(document.uri.fsPath)),
-      imageExtension(image.mimeType, image.name),
-      (candidate) => usedNames.has(candidate),
-      new Date()
+    const imageBase = formatImageName(configuredNameFormat(project), new Date())
+    let imageName = uniqueImageName(imageBase, imageExtension(image.mimeType, image.name), (candidate) =>
+      usedNames.has(candidate)
     )
     while (await fileExists(vscode.Uri.file(join(assetDirectory, imageName)))) {
       usedNames.add(imageName)
-      imageName = uniqueImageName(
-        basename(document.uri.fsPath, extname(document.uri.fsPath)),
-        imageExtension(image.mimeType, image.name),
-        (candidate) => usedNames.has(candidate),
-        new Date()
+      imageName = uniqueImageName(imageBase, imageExtension(image.mimeType, image.name), (candidate) =>
+        usedNames.has(candidate)
       )
     }
     const assetPath = join(assetDirectory, imageName)

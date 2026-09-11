@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { createImageReference, relativeReference } from '../src/assets/references'
-import { imageExtension, safeSlug, uniqueImageName } from '../src/assets/naming'
+import { formatImageName, imageExtension, safeSlug, uniqueImageName } from '../src/assets/naming'
 
 describe('image naming', () => {
   it('creates safe slugs', () => {
@@ -14,10 +14,14 @@ describe('image naming', () => {
     expect(imageExtension('application/octet-stream', 'capture.webp')).toBe('.webp')
   })
 
+  it('formats image names with configurable date tokens', () => {
+    expect(formatImageName('YYYY-MM-DD_HH-mm-ss', new Date('2026-01-02T03:04:05.006'))).toBe('2026-01-02_03-04-05')
+  })
+
   it('does not reuse an existing image name', () => {
-    const used = new Set(['article-20260101000000.png', 'article-20260101000000-2.png'])
-    expect(uniqueImageName('Article', '.png', (name) => used.has(name), new Date('2026-01-01T00:00:00.000Z'))).toBe(
-      'article-20260101000000-3.png'
+    const used = new Set(['Article-20260101000000.png', 'Article-20260101000000-2.png'])
+    expect(uniqueImageName('Article-20260101000000', '.png', (name) => used.has(name))).toBe(
+      'Article-20260101000000-3.png'
     )
   })
 })
