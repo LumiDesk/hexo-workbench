@@ -23,7 +23,8 @@ pnpm install
 
 - 使用严格 TypeScript；避免 `any`，为公共函数和跨模块数据定义明确类型。
 - 使用 2 个空格缩进、LF 换行和 UTF-8 编码；不使用分号。
-- 代码格式和静态检查以 ESLint 配置为准，提交前必须运行 `pnpm run lint`。
+- 代码格式以 Prettier 配置为准，提交前必须运行 `pnpm run format:check`。
+- 代码静态检查以 ESLint 配置为准，提交前必须运行 `pnpm run lint`。
 - 构建逻辑集中在 `esbuild.mjs`，不要把编译产物提交到 Git。
 - 扩展 API 的资源（命令、监听器、定时器等）必须注册到 `context.subscriptions`，避免扩展停用后泄漏资源。
 - 用户可见文案、命令标题和错误提示要清晰，并优先保持中英文语境一致。
@@ -35,7 +36,9 @@ pnpm install
 
 ```bash
 pnpm run check-types
+pnpm run format:check
 pnpm run lint
+pnpm run test
 pnpm run build
 ```
 

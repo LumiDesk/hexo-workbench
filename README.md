@@ -6,11 +6,11 @@ The project is intentionally small and Hexo-focused. It aims to make local blog 
 
 ## Project status
 
-This repository currently contains the extension scaffold only. The `Hello World` command is a placeholder used to verify activation and packaging; it does not provide the final authoring features yet.
+The P0 authoring workflow is under active development on a feature branch. It currently includes workspace configuration parsing, post/draft creation, and the Hexo-aware image paste provider. Real-blog acceptance is still pending.
 
 ## Development requirements
 
-- Node.js 20 or newer
+- Node.js 20.19 or newer
 - pnpm 11 or newer
 - VS Code 1.100 or newer
 
@@ -31,6 +31,7 @@ Run the type checker and linter:
 ```bash
 pnpm run check-types
 pnpm run lint
+pnpm run test
 ```
 
 Start an incremental build:
@@ -39,7 +40,7 @@ Start an incremental build:
 pnpm run watch
 ```
 
-Press `F5` in VS Code to launch an Extension Development Host. The scaffold contributes `Hexo Workbench: Hello World` to the Command Palette so the extension can be verified before feature work begins.
+Press `F5` in VS Code to launch an Extension Development Host. The Command Palette includes workspace initialization, post/draft creation, image paste, and the `Hello World` smoke-test command.
 
 Create a VSIX package:
 
@@ -47,19 +48,21 @@ Create a VSIX package:
 pnpm run package
 ```
 
-## Initial direction
+## Current P0 direction
 
 The first feature set is planned around a comfortable Hexo writing workflow:
 
 - create posts and drafts with Hexo-aware front matter;
 - paste or drop images into the correct article asset folder;
 - generate links that work with Hexo post asset folders;
-- preview the current site locally;
+- initialize a `.hexo-workbench.yml` workspace configuration;
 - customize image reference formats and workspace Front Matter templates.
 
 Git management and publishing are outside the extension's scope; use your existing Git tools and hooks.
 
 The extension will remain independent of any particular Hexo theme, including Tessera.
+
+The P0 commands only support standard `source/_posts` and `source/_drafts` directories. Git operations and publishing are intentionally not included.
 
 ## Product and development documentation
 
