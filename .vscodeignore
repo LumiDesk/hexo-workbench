@@ -17,5 +17,6 @@ dist/**/*.map
 test/
 tests/
 docs/
+scripts/
 coverage/
 *.vsix

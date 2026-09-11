@@ -48,6 +48,17 @@ Create a VSIX package:
 pnpm run package
 ```
 
+## GitHub Release
+
+This project is distributed through GitHub Releases rather than the VS Code Marketplace. After the feature branch has been merged into `main`, use:
+
+```bash
+pnpm release current  # first release for the current package version
+pnpm release patch    # later patch release
+```
+
+The command creates and pushes a `v*` tag. GitHub Actions then runs the checks, packages the VSIX, and attaches it to the GitHub Release. Users can install the downloaded file manually with `code --install-extension <file>.vsix`.
+
 ## Current P0 direction
 
 The first feature set is planned around a comfortable Hexo writing workflow:

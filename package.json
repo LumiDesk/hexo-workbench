@@ -4,6 +4,7 @@
   "description": "A focused VS Code authoring environment for Hexo blogs.",
   "version": "0.1.0",
   "publisher": "LumiDesk",
+  "icon": "resources/icon.png",
   "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
@@ -97,7 +98,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "package": "pnpm run format:check && pnpm run check-types && pnpm run lint && pnpm run test && pnpm run build && vsce package --no-dependencies",
-    "prepublishOnly": "pnpm run format:check && pnpm run check-types && pnpm run lint && pnpm run test && pnpm run build"
+    "prepublishOnly": "pnpm run format:check && pnpm run check-types && pnpm run lint && pnpm run test && pnpm run build",
+    "release": "node scripts/release.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
