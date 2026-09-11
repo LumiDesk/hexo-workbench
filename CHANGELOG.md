@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+- Refresh the extension icon with a cool blue Hexo and editor mark.
+
 ## 0.1.0
 
 - Initialize the Hexo Workbench VS Code extension project.
