@@ -177,11 +177,7 @@ class HexoImagePasteProvider implements vscode.DocumentPasteEditProvider, vscode
     }
     const assetPath = join(assetDirectory, imageName)
     const alt = altText(document, ranges, imageName)
-    const formats: ImageLinkFormat[] = requestedFormat(context)
-      ? [requestedFormat(context)!]
-      : configuredFormat(project) === 'asset_img'
-        ? ['asset_img', 'markdown']
-        : ['markdown', 'asset_img']
+    const formats: ImageLinkFormat[] = [requestedFormat(context) ?? configuredFormat(project)]
 
     return formats.map((format) => {
       const edit = new vscode.DocumentPasteEdit(
