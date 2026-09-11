@@ -59,6 +59,10 @@ The first feature set is planned around a comfortable Hexo writing workflow:
 
 The extension will remain independent of any particular Hexo theme, including Tessera.
 
+## Product and development documentation
+
+Product scope, user flows, architecture notes, and confirmed design decisions are maintained in [`docs/`](docs/README.md).
+
 ## License
 
 Hexo Workbench is distributed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for the full text.
