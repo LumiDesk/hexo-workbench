@@ -55,9 +55,15 @@ The first feature set is planned around a comfortable Hexo writing workflow:
 - paste or drop images into the correct article asset folder;
 - generate links that work with Hexo post asset folders;
 - preview the current site locally;
-- keep publishing and version history Git-friendly.
+- customize image reference formats and workspace Front Matter templates.
+
+Git management and publishing are outside the extension's scope; use your existing Git tools and hooks.
 
 The extension will remain independent of any particular Hexo theme, including Tessera.
+
+## Product and development documentation
+
+Product scope, user flows, architecture notes, and confirmed design decisions are maintained in [`docs/`](docs/README.md).
 
 ## License
 
